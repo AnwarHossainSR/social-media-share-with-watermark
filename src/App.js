@@ -1,34 +1,42 @@
-import MetaTags from 'react-meta-tags';
-import ShareButton from 'react-social-share-buttons';
+import { useEffect, useRef, useState } from 'react';
+import { FacebookIcon, FacebookShareButton } from 'react-share';
 
-const APP = () => {
+async function getUrFromService() {
+  // The real implementation would make a network call here.
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+  return 'http://localhost:3000/';
+}
+
+export default function App() {
+  const shareButton = useRef(null);
+  const [url, setUrl] = useState('none'); // Unfortunately, we have to have a dummy string here, or FacebookShareButton will blow up.
+
+  // Provide an onClick handler that asyncronously fetches the url and sets it in the state.
+  const onClick = async () => {
+    // Be sure to check for the "none" state, so we don't trigger an infinite loop.
+    if (url === 'none') {
+      const newUrl = await getUrFromService();
+      setUrl(newUrl);
+    }
+  };
+
+  // Whenever "url" changes and we re-render, we manually fire the click event on the button, and then re-set the url.
+  useEffect(() => {
+    if (url !== 'none') {
+      shareButton.current?.click();
+      setUrl('none');
+    }
+  }, [url, shareButton]);
+
   return (
-    <div>
-      <MetaTags>
-        <title>Page 1</title>
-        <meta
-          id='meta-description'
-          name='description'
-          content='Some description.'
-        />
-        <meta id='og-title' property='og:title' content='MyApp' />
-        <meta property='og:image' content='url_image'></meta>
-        <meta
-          id='og-image'
-          property='og:image'
-          content='https://live.staticflickr.com/4561/38054606355_26429c884f_b.jpg'
-        />
-      </MetaTags>
-      Hey, share me!
-      <ShareButton
-        compact
-        socialMedia={'facebook'}
-        url={'https://xkcd.com/1024/'}
-        media={'https://imgs.xkcd.com/comics/error_code.png'}
-        text='Sit by a lake'
-      />
-    </div>
+    <FacebookShareButton
+      ref={shareButton}
+      // Disable calling the dialog if we don't have a url yet.
+      openShareDialogOnClick={url !== 'none'}
+      url={url}
+      onClick={onClick}
+    >
+      <FacebookIcon />
+    </FacebookShareButton>
   );
-};
-
-export default APP;
+}
