@@ -11,10 +11,7 @@ const App = () => {
       setimage(ref.current?.currentImgNodes[0]?.src);
     }
   }, [ref, image]);
-  console.log(file_and_dataurl);
-  console.log(ref.current?.currentImgNodes[0]?.src);
-  console.log('image', image);
-  console.log(ref2.current);
+
   return (
     <div>
       <input
@@ -22,7 +19,7 @@ const App = () => {
         onChange={(e) => {
           if (e.target.files.length > 0) {
             let file = e.target.files[0];
-            setimage(file);
+            setimage(URL.createObjectURL(file));
             let reader = new FileReader();
             reader.onload = function (e) {
               set_file([file, e.target.result]);
@@ -51,7 +48,11 @@ const App = () => {
 
       <button
         onClick={() => {
-          navigator.share({ files: [image] });
+          navigator.share({
+            title: 'Hello',
+            text: 'Check out this image!',
+            url: image,
+          });
         }}
       >
         Share
