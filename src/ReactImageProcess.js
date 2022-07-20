@@ -47,11 +47,14 @@ const App = () => {
       )}
 
       <button
-        onClick={() => {
+        onClick={async () => {
+          const base64url = image;
+          const blob = await (await fetch(base64url)).blob();
+          const file = new File([blob], 'fileName.png', { type: blob.type });
           navigator.share({
             title: 'Hello',
             text: 'Check out this image!',
-            url: image,
+            files: [file],
           });
         }}
       >
