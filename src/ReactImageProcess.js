@@ -29,15 +29,12 @@ const App = () => {
           opacity={1}
           coordinate={[200, 1400]}
           ref={ref}
-          style={{ marginTop: '15rem' }}
         >
           <img width={400} height={400} src={file} alt='icon' />
         </ReactImageProcess>
       )}
 
-      <p onClick={() => navigator.share({ files: [image] })}>
-        Share
-      </p>
+      <button onClick={() => navigator.share({ files: [file] })}>Share</button>
 
       {image && (
         <img
