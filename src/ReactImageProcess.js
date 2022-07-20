@@ -1,55 +1,67 @@
 import React, { useEffect, useRef, useState } from 'react';
 import ReactImageProcess from 'react-image-process';
-import watermarkIcon from './watermark.svg';
 const App = () => {
   const [image, setimage] = useState(undefined);
-  const [file, setFile] = useState(undefined);
+  let [file_and_dataurl, set_file] = useState(null);
   const ref = useRef();
   useEffect(() => {
-    console.log(ref.current);
     if (ref.current?.currentImgNodes[0]) {
+      console.log(ref.current);
       setimage(ref.current?.currentImgNodes[0]?.src);
     }
-  }, [image, file, ref]);
+  }, [ref, image]);
 
   return (
     <div>
       <input
         type='file'
-        onChange={(e) => setFile(URL.createObjectURL(e.target.files[0]))}
+        accept='image/*'
+        onChange={(e) => {
+          if (e.target.files.length > 0) {
+            let file = e.target.files[0];
+            setimage(URL.createObjectURL(file));
+            let reader = new FileReader();
+            reader.onload = function (e) {
+              set_file([file, e.target.result]);
+            };
+            reader.readAsDataURL(file);
+
+            // set_file(file);
+          }
+        }}
       />
       <p></p>
-      {file && (
+      {file_and_dataurl !== null && (
         <ReactImageProcess
           mode='waterMark'
-          waterMarkType='image'
-          waterMark={watermarkIcon}
-          width={3000}
-          height={200}
-          opacity={1}
-          coordinate={[200, 1400]}
+          waterMarkType='text'
+          waterMark={'WATER'}
+          fontBold={false}
+          fontSize={20}
+          fontColor='#396'
+          coordinate={[10, 20]}
           ref={ref}
         >
-          <img width={400} height={400} src={file} alt='icon' />
+          <img width={400} height={400} src={image} alt='icon' />
         </ReactImageProcess>
       )}
 
       <button
-        onClick={() =>
-          navigator.share({ files: [ref.current?.currentImgNodes[0]?.src] })
-        }
+        onClick={() => {
+          navigator.share({ files: [file_and_dataurl[0]] });
+        }}
       >
         Share
       </button>
 
-      {image && (
+      {/* {image && (
         <img
           src={ref.current?.currentImgNodes[0]?.src}
           alt='fdgfd'
           width={400}
           height={420}
         />
-      )}
+      )} */}
     </div>
   );
 };
