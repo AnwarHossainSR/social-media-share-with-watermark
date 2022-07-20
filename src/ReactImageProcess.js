@@ -4,18 +4,21 @@ const App = () => {
   const [image, setimage] = useState(undefined);
   let [file_and_dataurl, set_file] = useState(null);
   const ref = useRef();
+  const ref2 = useRef();
   useEffect(() => {
     if (ref.current?.currentImgNodes[0]) {
       console.log(ref.current);
       setimage(ref.current?.currentImgNodes[0]?.src);
     }
   }, [ref, image]);
-
+  console.log(file_and_dataurl);
+  console.log(ref.current?.currentImgNodes[0]?.src);
+  console.log('image', image);
+  console.log(ref2.current);
   return (
     <div>
       <input
         type='file'
-        accept='image/*'
         onChange={(e) => {
           if (e.target.files.length > 0) {
             let file = e.target.files[0];
@@ -48,20 +51,21 @@ const App = () => {
 
       <button
         onClick={() => {
-          navigator.share({ files: [ref.current?.currentImgNodes[0]?.src] });
+          navigator.share({ files: [image] });
         }}
       >
         Share
       </button>
 
-      {/* {image && (
+      {image && (
         <img
           src={ref.current?.currentImgNodes[0]?.src}
           alt='fdgfd'
           width={400}
           height={420}
+          ref={ref2}
         />
-      )} */}
+      )}
     </div>
   );
 };
