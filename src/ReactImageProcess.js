@@ -34,7 +34,13 @@ const App = () => {
         </ReactImageProcess>
       )}
 
-      <button onClick={() => navigator.share({ files: [file] })}>Share</button>
+      <button
+        onClick={() =>
+          navigator.share({ files: [ref.current?.currentImgNodes[0]?.src] })
+        }
+      >
+        Share
+      </button>
 
       {image && (
         <img
