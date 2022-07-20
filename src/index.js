@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import ReactImageProcess from './ReactImageProcess';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <ReactImageProcess />
   </React.StrictMode>,
   document.getElementById('root')
 );
