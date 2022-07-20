@@ -48,7 +48,7 @@ const App = () => {
 
       <button
         onClick={() => {
-          navigator.share({ files: [file_and_dataurl[0]] });
+          navigator.share({ files: [ref.current?.currentImgNodes[0]?.src] });
         }}
       >
         Share
