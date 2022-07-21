@@ -26,6 +26,7 @@ const App = () => {
       <input
         type='file'
         onChange={(e) => {
+          console.log(e);
           if (e.target.files.length > 0) {
             let file = e.target.files[0];
             setimage(URL.createObjectURL(file));
@@ -46,15 +47,13 @@ const App = () => {
           width={400 * 11.5}
           height={510}
           opacity={1}
-          coordinate={[0, 200 * 14.7]}
+          //coordinate={[0, 200 * 14.8]}
           ref={ref}
         >
           <img
             style={{
-              minWidth: 200,
-              maxWidth: 200,
-              alignSelf: `center`,
-              transform: `translateY(10px)`,
+              width: 200,
+              height: 150,
             }}
             src={image}
             alt='icon'
