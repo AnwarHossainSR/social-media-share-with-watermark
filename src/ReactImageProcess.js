@@ -47,13 +47,17 @@ const App = () => {
           width={400 * 11.5}
           height={510}
           opacity={1}
-          //coordinate={[0, 200 * 14.8]}
+          coordinate={[0, 200 * 14.8]}
           ref={ref}
         >
           <img
             style={{
               width: 200,
+              minWidth: 200,
+              maxWidth: 200,
               height: 150,
+              minHeight: 150,
+              MaxHeight: 150,
             }}
             src={image}
             alt='icon'
