@@ -3,6 +3,7 @@ import ReactImageProcess from 'react-image-process';
 import WatermarkImage from './watermark1.svg';
 const App = () => {
   const [image, setimage] = useState(undefined);
+  const [size, setSize] = useState({ width: 0, height: 0 });
   let [file_and_dataurl, set_file] = useState(null);
   const ref = useRef();
   const ref2 = useRef();
@@ -13,11 +14,7 @@ const App = () => {
   }, [ref, image]);
   useEffect(() => {
     if (ref2.current) {
-      console.log(
-        'ref width height',
-        ref2.current.offsetWidth,
-        ref2.current.offsetHeight
-      );
+      console.log('ref width height', ref2.current);
     }
   }, [ref2]);
 
@@ -26,7 +23,13 @@ const App = () => {
       <input
         type='file'
         onChange={(e) => {
-          console.log(e);
+          console.log(e.nativeEvent.path[6].window.innerWidth);
+          console.log(e.nativeEvent.path[6].window.innerHeight);
+          setSize({
+            width: e.nativeEvent.path[6].window.innerWidth,
+            height: e.nativeEvent.path[6].window.innerHeight,
+          });
+          //console.log(e.nativeEvent.path.window.innerWidth);
           if (e.target.files.length > 0) {
             let file = e.target.files[0];
             setimage(URL.createObjectURL(file));
@@ -44,10 +47,9 @@ const App = () => {
           mode='waterMark'
           waterMarkType='image'
           waterMark={WatermarkImage}
-          width={400 * 11.5}
+          width={size.width*5}
           height={510}
-          opacity={1}
-          coordinate={[0, 200 * 14.8]}
+          //coordinate={[0, 200 * 14.8]}
           ref={ref}
         >
           <img
@@ -61,6 +63,7 @@ const App = () => {
             }}
             src={image}
             alt='icon'
+            ref={ref2}
           />
         </ReactImageProcess>
       )}
