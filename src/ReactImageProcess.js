@@ -4,10 +4,8 @@ const App = () => {
   const [image, setimage] = useState(undefined);
   let [file_and_dataurl, set_file] = useState(null);
   const ref = useRef();
-  const ref2 = useRef();
   useEffect(() => {
     if (ref.current?.currentImgNodes[0]) {
-      console.log(ref.current);
       setimage(ref.current?.currentImgNodes[0]?.src);
     }
   }, [ref, image]);
@@ -48,9 +46,10 @@ const App = () => {
 
       <button
         onClick={async () => {
-          const base64url = image;
+          const base64url = ref.current?.currentImgNodes[0]?.src;
           const blob = await (await fetch(base64url)).blob();
           const file = new File([blob], 'fileName.png', { type: blob.type });
+          console.log(file);
           navigator.share({
             title: 'Hello',
             text: 'Check out this image!',
@@ -67,7 +66,6 @@ const App = () => {
           alt='fdgfd'
           width={400}
           height={420}
-          ref={ref2}
         />
       )}
     </div>
