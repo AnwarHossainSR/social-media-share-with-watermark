@@ -1,14 +1,21 @@
 import React, { useEffect, useRef, useState } from 'react';
 import ReactImageProcess from 'react-image-process';
+import WatermarkImage from './watermark1.svg';
 const App = () => {
   const [image, setimage] = useState(undefined);
   let [file_and_dataurl, set_file] = useState(null);
   const ref = useRef();
+  const ref2 = useRef();
   useEffect(() => {
     if (ref.current?.currentImgNodes[0]) {
       setimage(ref.current?.currentImgNodes[0]?.src);
     }
   }, [ref, image]);
+  useEffect(() => {
+    if (ref2.current) {
+      console.log('ref width height', ref2.current.offsetWidth, ref2.current.offsetHeight);
+    }
+  }, [ref2]);
 
   return (
     <div>
@@ -23,8 +30,6 @@ const App = () => {
               set_file([file, e.target.result]);
             };
             reader.readAsDataURL(file);
-
-            // set_file(file);
           }
         }}
       />
@@ -32,15 +37,15 @@ const App = () => {
       {file_and_dataurl !== null && (
         <ReactImageProcess
           mode='waterMark'
-          waterMarkType='text'
-          waterMark={'WATER'}
-          fontBold={false}
-          fontSize={20}
-          fontColor='#396'
-          coordinate={[10, 20]}
+          waterMarkType='image'
+          waterMark={WatermarkImage}
+          width={410 * 10}
+          height={410}
+          opacity={1}
+          coordinate={[0, 400*6.75]}
           ref={ref}
         >
-          <img width={400} height={400} src={image} alt='icon' />
+          <img width={400} height={400} src={image} alt='icon' ref={ref2} />
         </ReactImageProcess>
       )}
 
@@ -65,7 +70,7 @@ const App = () => {
           src={ref.current?.currentImgNodes[0]?.src}
           alt='fdgfd'
           width={400}
-          height={420}
+          height={400}
         />
       )}
     </div>
