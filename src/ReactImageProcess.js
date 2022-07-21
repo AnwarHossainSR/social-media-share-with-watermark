@@ -13,7 +13,11 @@ const App = () => {
   }, [ref, image]);
   useEffect(() => {
     if (ref2.current) {
-      console.log('ref width height', ref2.current.offsetWidth, ref2.current.offsetHeight);
+      console.log(
+        'ref width height',
+        ref2.current.offsetWidth,
+        ref2.current.offsetHeight
+      );
     }
   }, [ref2]);
 
@@ -39,22 +43,21 @@ const App = () => {
           mode='waterMark'
           waterMarkType='image'
           waterMark={WatermarkImage}
-          width={400 * 10.3}
-          height={410}
+          width={400 * 11.5}
+          height={510}
           opacity={1}
-          coordinate={[0, 200*13.3]}
+          coordinate={[0, 200 * 14.7]}
           ref={ref}
         >
           <img
             style={{
-              width: '100%',
+              minWidth: 200,
               maxWidth: 200,
               alignSelf: `center`,
               transform: `translateY(10px)`,
             }}
             src={image}
             alt='icon'
-            ref={ref2}
           />
         </ReactImageProcess>
       )}
@@ -75,14 +78,14 @@ const App = () => {
         Share
       </button>
 
-      {image && (
+      {/* {image && (
         <img
           src={ref.current?.currentImgNodes[0]?.src}
           alt='fdgfd'
           width={400}
           height={400}
         />
-      )}
+      )} */}
     </div>
   );
 };
