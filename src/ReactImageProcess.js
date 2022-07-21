@@ -39,13 +39,23 @@ const App = () => {
           mode='waterMark'
           waterMarkType='image'
           waterMark={WatermarkImage}
-          width={410 * 10}
+          width={400 * 10.3}
           height={410}
           opacity={1}
-          coordinate={[0, 400*6.75]}
+          coordinate={[0, 200*13.3]}
           ref={ref}
         >
-          <img width={400} height={400} src={image} alt='icon' ref={ref2} />
+          <img
+            style={{
+              width: '100%',
+              maxWidth: 200,
+              alignSelf: `center`,
+              transform: `translateY(10px)`,
+            }}
+            src={image}
+            alt='icon'
+            ref={ref2}
+          />
         </ReactImageProcess>
       )}
 
