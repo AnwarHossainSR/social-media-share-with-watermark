@@ -17,8 +17,8 @@ const App = () => {
     new Promise((resolve) => {
       Resizer.imageFileResizer(
         file,
-        200,
-        150,
+        4000,
+        3000,
         'JPEG',
         100,
         0,
@@ -60,10 +60,10 @@ const App = () => {
           mode='waterMark'
           waterMarkType='image'
           waterMark={WatermarkImage}
-          width={200}
-          height={50}
+          width={4000}
+          height={500}
           opacity={1}
-          coordinate={[0, 100]}
+          coordinate={[0, 2500]}
           ref={ref}
         >
           <img
