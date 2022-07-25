@@ -5,6 +5,7 @@ import WatermarkImage from './watermark1.svg';
 
 const App = () => {
   const [image, setimage] = useState(undefined);
+  const [imageProcess, setimageProcess] = useState(4000);
   let [file_and_dataurl, set_file] = useState(null);
   const ref = useRef();
   useEffect(() => {
@@ -19,32 +20,37 @@ const App = () => {
         file,
         4000,
         3000,
-        'JPEG',
+        'png',
         100,
         0,
         (uri) => {
           resolve(uri);
         },
         'base64',
-        200,
-        150
+        4000,
+        3000
       );
     });
 
   const onChange = async (event) => {
     try {
-      const img = await resizeFile(event.target.files[0]);
-      const base64url = img;
-      const blob = await (await fetch(base64url)).blob();
-      const file = new File([blob], 'fileName.png', { type: blob.type });
+      if (event.target.files) {
+        if (event.target.files[0].size < 1200000) {
+          setimageProcess(6100);
+        }
+        const img = await resizeFile(event.target.files[0]);
+        const base64url = img;
+        const blob = await (await fetch(base64url)).blob();
+        const file = new File([blob], `${Date.now()}.png`, { type: blob.type });
 
-      if (event.target.files.length > 0) {
-        setimage(URL.createObjectURL(file));
-        let reader = new FileReader();
-        reader.onload = function (e) {
-          set_file([file, event.target.result]);
-        };
-        reader.readAsDataURL(file);
+        if (event.target.files.length > 0) {
+          setimage(URL.createObjectURL(file));
+          let reader = new FileReader();
+          reader.onload = function (e) {
+            set_file([file, event.target.result]);
+          };
+          reader.readAsDataURL(file);
+        }
       }
     } catch (err) {
       console.log(err);
@@ -60,7 +66,7 @@ const App = () => {
           mode='waterMark'
           waterMarkType='image'
           waterMark={WatermarkImage}
-          width={4000}
+          width={imageProcess}
           height={500}
           opacity={1}
           coordinate={[0, 2500]}
@@ -70,6 +76,7 @@ const App = () => {
             style={{
               width: '200px',
               height: '150px',
+              border: '1px solid black',
             }}
             src={image}
             alt='icon'
