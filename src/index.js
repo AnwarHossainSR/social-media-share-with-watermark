@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ReactImageProcess from './ReactImageProcess';
+import ReactImageProcessvesion2 from './ReactImageProcessvesion2';
 
 ReactDOM.render(
   <React.StrictMode>
-    <ReactImageProcess />
+    <ReactImageProcessvesion2 />
   </React.StrictMode>,
   document.getElementById('root')
 );

@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Resizer from 'react-image-file-resizer';
 import ReactImageProcess from 'react-image-process';
-import WatermarkImage from './watermark1.svg';
+import WatermarkImage from './watermark.svg';
 
-const App = () => {
+const ReactImageProcessvesion2 = () => {
   const [image, setimage] = useState(undefined);
   const [imageProcess, setimageProcess] = useState(4000);
   let [file_and_dataurl, set_file] = useState(null);
@@ -67,9 +67,9 @@ const App = () => {
           waterMarkType='image'
           waterMark={WatermarkImage}
           width={imageProcess}
-          height={500}
+          height={3000}
           opacity={1}
-          coordinate={[0, 2500]}
+          coordinate={[0, 0]}
           ref={ref}
         >
           <img
@@ -100,17 +100,8 @@ const App = () => {
       >
         Share
       </button>
-
-      {/* {image && (
-        <img
-          src={ref.current?.currentImgNodes[0]?.src}
-          alt='fdgfd'
-          width={400}
-          height={400}
-        />
-      )} */}
     </div>
   );
 };
 
-export default App;
+export default ReactImageProcessvesion2;
